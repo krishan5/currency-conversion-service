@@ -16,7 +16,15 @@ import com.kk.microservice.currencyconversionservice.entity.CurrencyConversion;
  * but this not gonna help us because whenever port get change on currency-exchange-service, we will also have
  * to change it here. To get rid of it, use Load balancer and Naming server / Service registry approach.
  */
-@FeignClient(name = "currency-exchange-service", url = "http://localhost:8000")
+//@FeignClient(name = "currency-exchange-service", url = "http://localhost:8000")
+
+/**
+ * Here, we have just removed url which means feign will now talk to eureka naming server
+ * and eureka naming server will check in its registry that is there any instance available 
+ * for "currency-exchange-service" application and if its available then it will return its url. 
+ * If multiple instances of it are available then eureka can return any of them
+ */
+@FeignClient(name = "currency-exchange-service")
 public interface CurrencyExchangeProxy {
 	
 	/**
